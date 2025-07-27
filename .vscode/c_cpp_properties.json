@@ -5,8 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/*/include/**",
-                "C:/Program Files (x86)/Windows Kits/10/Include/*/**",
-                "${workspaceFolder}/src/libs/mymath2/include"
+                "C:/Program Files (x86)/Windows Kits/10/Include/*/**"
             ],
             "compilerPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe",
             "intelliSenseMode": "windows-msvc-x64",
