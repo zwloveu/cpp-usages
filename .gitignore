@@ -1,0 +1,13 @@
+# CMake/build directories
+build/
+out/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+
+# Compiled files
+*.obj
+*.exe
+*.ilk
+*.pdb
