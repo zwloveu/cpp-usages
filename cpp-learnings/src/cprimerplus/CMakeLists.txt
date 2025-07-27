@@ -5,6 +5,7 @@ set(CPRIMER_SOURCES
     src/04_01.c
     src/05_01.c
     src/05_02.c
+    src/05_03.c
 )
 
 foreach(source_file ${CPRIMER_SOURCES})
