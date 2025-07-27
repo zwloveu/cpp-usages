@@ -31,3 +31,4 @@ add_executable(cpp_learningss
 )
 
 add_subdirectory(src/cprimerplus)
+add_subdirectory(src/cppprimer)
