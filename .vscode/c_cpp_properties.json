@@ -23,6 +23,18 @@
             "intelliSenseMode": "linux-gcc-x64",
             "cStandard": "c17",
             "cppStandard": "c++17"
+        },
+         {
+            "name": "MINGW64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "d:/msys64/mingw64/include/**",
+                "d:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/*/include/**"
+            ],
+            "compilerPath": "d:/msys64/mingw64/bin/g++.exe",
+            "intelliSenseMode": "windows-gcc-x64",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
         }
     ],
     "version": 4
