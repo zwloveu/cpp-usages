@@ -12,7 +12,7 @@ int main(void)
     printf("The unsigned int is %u and not %d.\n", un, un);
 
     long big = 65537;
-    printf("The long is %ld and not %hd.\n", big, big);
+    printf("The long is %ld and not %ld.\n", big, big);
 
     long long very_big = 12345678908642;
     printf("The long long is %lld.\n", very_big);
