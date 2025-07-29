@@ -13,6 +13,10 @@ endif()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Configure C standard
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
 add_subdirectory(src/libs/mymath)
 
 include_directories(
@@ -26,7 +30,7 @@ else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
-add_executable(cpp_learningss
+add_executable(cpp_learnings
     src/main.cpp
 )
 
