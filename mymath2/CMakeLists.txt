@@ -3,7 +3,7 @@ project(mymath2 LANGUAGES C)
 
 # Windows-specific configuration
 if(MSVC)
-    add_compile_options(/W4 /WX /EHsc /Zc:__cplusplus /MD /analyze /sdl)
+    add_compile_options(/W4 /WX /EHsc /Zc:__cplusplus /MD /analyze /sdl /analyze:enableRuleCategory Security)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 else()  # Add for Linux/macOS and MinGW
     add_compile_options(-Wall -Wextra -Wpedantic -Werror -g -O0)
