@@ -2,7 +2,7 @@
 
 int main()
 {
-    std::cout << "C++ version: " << __cplusplus << std::endl;
+    std::cout << "C++ standard version: " << __cplusplus << std::endl;
 
     return 0;
 }

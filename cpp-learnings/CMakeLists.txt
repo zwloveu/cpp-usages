@@ -38,5 +38,9 @@ add_executable(cpp_learnings
     src/main.cpp
 )
 
+add_executable(c_learnings
+    src/main.c
+)
+
 add_subdirectory(src/cprimerplus)
 add_subdirectory(src/cppprimer)
