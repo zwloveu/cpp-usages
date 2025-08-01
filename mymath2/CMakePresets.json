@@ -15,7 +15,19 @@
             "binaryDir": "${sourceDir}/build/linux",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++"
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "mingw64",
+            "displayName": "MINGW64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/mingw64",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         }
     ]

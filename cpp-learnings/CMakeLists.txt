@@ -10,11 +10,15 @@ else()  # Add for Linux/macOS and MinGW
 endif()
 
 # Configure C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Configure C standard
-set(CMAKE_C_STANDARD 17)
+if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+  set(CMAKE_C_STANDARD 17)  # MSVC C17
+else()
+  set(CMAKE_C_STANDARD 20)  # GCC/Clang C20
+endif()
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 add_subdirectory(src/libs/mymath)
