@@ -6,8 +6,6 @@ namespace Geography = CppPrimer::Domain::Geography;
 
 int main()
 {
-    std::cout << "Hello Cpp Primer" << std::endl;
-
     Geography::Country china("China", 1412000000, 9596961.0);
     china.displayInfo();
 
@@ -16,6 +14,10 @@ int main()
     unknown.setPopulation(1000000);
     unknown.setArea(500000.5);
     unknown.displayInfo();
+
+    const Geography::Country china2("China", 1412000000, 9596961.0);
+    // china2.setPopulation(1000000); const object can only access const-qualifying member function
+    china2.displayInfo();
 
     return 0;
 }
