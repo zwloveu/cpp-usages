@@ -6,6 +6,7 @@ bool is_letter(char letter);
 char to_lower(char letter);
 char to_upper(char letter);
 size_t get_length(const char * const str);
+void str_copy(const char * const src, char * const dest);
 
 int main(void)
 {
@@ -27,8 +28,13 @@ int main(void)
     printf("to_lower('%c') = %c\n", 'Z', to_lower('Z'));
     printf("to_upper('%c') = %c\n", 'a', to_upper('a'));
 
-    char str[] = "c language is really good!";
-    printf("length of `%s` is %td\n", str, get_length(str));
+    char src[] = "c language is really good!";
+    size_t src_length = get_length(src);
+    printf("src length of `%s` is %td\n", src, src_length);
+
+    char dest[src_length];
+    str_copy(src, dest);
+    printf("dest length of `%s` is %td\n", dest, get_length(dest));
 
     return 0;
 }
@@ -71,4 +77,11 @@ size_t get_length(const char * const str)
         ptr++;
 
     return ptr - str;
+}
+
+void str_copy(const char * src, char * dest)
+{
+    if (src == NULL || dest == NULL) return;
+
+    while((*dest++ = *src++)!='\0');
 }
