@@ -5,8 +5,8 @@
 bool is_letter(char letter);
 char to_lower(char letter);
 char to_upper(char letter);
-size_t get_length(const char * const str);
-void str_copy(const char * const src, char * const dest);
+size_t get_length(const char *const str);
+void str_copy(const char *const src, char *const dest);
 
 int main(void)
 {
@@ -41,10 +41,10 @@ int main(void)
 
 char to_lower(char letter)
 {
-    if(!is_letter(letter))
+    if (!is_letter(letter))
         return letter;
 
-     if((letter >= 'A') && (letter <= 'Z')) 
+    if ((letter >= 'A') && (letter <= 'Z'))
         return letter - 'A' + 'a';
 
     return letter;
@@ -52,10 +52,10 @@ char to_lower(char letter)
 
 char to_upper(char letter)
 {
-    if(!is_letter(letter))
+    if (!is_letter(letter))
         return letter;
-        
-    if((letter >= 'a') && (letter <= 'z'))
+
+    if ((letter >= 'a') && (letter <= 'z'))
         return letter - 'a' + 'A';
 
     return letter;
@@ -63,25 +63,27 @@ char to_upper(char letter)
 
 bool is_letter(char letter)
 {
-    return (letter >= 'A' && letter <= 'Z') || 
-        (letter >= 'a' && letter <= 'z');
+    return (letter >= 'A' && letter <= 'Z') ||
+           (letter >= 'a' && letter <= 'z');
 }
 
-size_t get_length(const char * const str)
+size_t get_length(const char *const str)
 {
-    if(str ==NULL)
+    if (str == NULL)
         return 0;
 
     const char *ptr = str;
-    while(*ptr !='\0')
+    while (*ptr != '\0')
         ptr++;
 
     return ptr - str;
 }
 
-void str_copy(const char * src, char * dest)
+void str_copy(const char *src, char *dest)
 {
-    if (src == NULL || dest == NULL) return;
+    if (src == NULL || dest == NULL)
+        return;
 
-    while((*dest++ = *src++)!='\0');
+    while ((*dest++ = *src++) != '\0')
+        ;
 }
