@@ -7,6 +7,7 @@ set(CPRIMER_SOURCES
     src/05_01.c
     src/05_02.c
     src/05_03.c
+    src/06_01.c
 )
 
 set(CPRIMER_INTERNAL_SOURCES
