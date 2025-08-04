@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 bool is_letter(char letter);
 char to_lower(char letter);
@@ -32,9 +33,10 @@ int main(void)
     size_t src_length = get_length(src);
     printf("src length of `%s` is %td\n", src, src_length);
 
-    char dest[src_length];
+    char *dest = malloc(src_length);
     str_copy(src, dest);
     printf("dest length of `%s` is %td\n", dest, get_length(dest));
+    free(dest);
 
     return 0;
 }
