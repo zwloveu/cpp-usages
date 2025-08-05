@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MONTHS 12
 
@@ -23,7 +24,7 @@ int main(void)
            "The address of the first element of days is %p.\n"
            "The address of the second element of days is %p.\n"
            "The step between the elements of days is %zd.\n"
-           "days of one year is %d",
+           "days of one year is %d.\n",
            (void *)days,
            (void *)p_days,
            (void *)&days[0],
@@ -42,6 +43,21 @@ int main(void)
     print_data(&ch, 'c');
 
     printf("void * occupies %zd bytes.\n", sizeof(void *));
+
+    char multiple[] = "a string";
+    char *p = multiple;
+    //char * can be implicitly converted to void *
+    printf("address of multiple is %p.\n", multiple);
+    for (size_t i = 0; i < strlen(multiple); i++)
+        printf("\nmultiple[%td] = %c  *(p+%td) = %c  &multiple[%td] = %p  p+%td = %p",
+               i, multiple[i], i, *(p + i), i, &multiple[i], i, p + i);
+
+    int multiple1[9] = {1,2,3,4,5,6,7,8,9};
+    int *p1 = multiple1;
+    printf("address of multiple1 is %p.\n", (void *)multiple1);
+    for (size_t i = 0; i < 9; i++)
+        printf("\nmultiple1[%td] = %d  *(p+%td) = %d  &multiple1[%td] = %p  p+%td = %p",
+               i, multiple1[i], i, *(p1 + i), i, (void *)&multiple1[i], i, (void *)(p1 + i));
 
     return 0;
 }
