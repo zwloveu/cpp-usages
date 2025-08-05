@@ -46,13 +46,13 @@ int main(void)
 
     char multiple[] = "a string";
     char *p = multiple;
-    //char * can be implicitly converted to void *
+    // char * can be implicitly converted to void *
     printf("address of multiple is %p.\n", multiple);
     for (size_t i = 0; i < strlen(multiple); i++)
         printf("\nmultiple[%td] = %c  *(p+%td) = %c  &multiple[%td] = %p  p+%td = %p",
                i, multiple[i], i, *(p + i), i, &multiple[i], i, p + i);
 
-    int multiple1[9] = {1,2,3,4,5,6,7,8,9};
+    int multiple1[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     int *p1 = multiple1;
     printf("address of multiple1 is %p.\n", (void *)multiple1);
     for (size_t i = 0; i < 9; i++)
