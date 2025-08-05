@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #define MONTHS 12
 
@@ -89,6 +90,48 @@ int main(void)
         // *board -> short(*)[N][O] -> short (*)[O]
         // **board -> short *, points to board1[0][0][0]
         printf(" board1[%d]: %hd\n", i, *(**board1 + i));
+
+    int zippo[4][2] = {{2, 4}, {6, 8}, {1, 3}, {5, 7}};
+    // pz points to the first line of zippo int [2]{2, 4}
+    const int (*const pz)[2] = zippo;
+    int (*const pz0)[4][2] = &zippo;
+    (*pz0)[3][1] = 70;
+    printf("pz0's value is %p.\n", pz0);
+    printf("zippo's address is %p.\n", (void *)zippo);
+    printf("pz's value is %p.\n", (void *)pz);
+    printf("size of pz is %zd.\n", sizeof(pz));
+    assert(pz == zippo);
+    assert(sizeof(pz) == sizeof(int) * 2);
+    assert(*(*(pz + 0) + 0) == 2);
+    assert(*(*(pz + 0) + 1) == 4);
+    const int (*pz1)[2] = pz + 1;
+    assert(sizeof(pz1) == sizeof(int) * 2);
+    assert(*(*(pz1 + 0) + 0) == 6);
+    assert(*(*(pz1 + 0) + 1) == 8);
+    int item_index_in_zippo = 0;
+    for (int row = 0; row < 4; row++)
+    {
+        for (int column = 0; column < 2; column++)
+        {
+            // pz[row][column] = *(*(pz + row) + column)
+            printf("zippo[%d][%d] = %d\n", row, column, pz[row][column]);
+            printf("zippo[%d] = %d\n",
+                   item_index_in_zippo,
+                   *(*pz + item_index_in_zippo++));
+        }
+    }
+
+    int *pt1 = (int[2]){10, 20};
+    for (size_t index = 0; index < 2; printf("pt1[%zd] = %d\n", index, pt1[index++]))
+        ;
+
+    int (*pt2)[4] = (int[2][4]){{1, 2, 3, -9}, {4, 5, 6, -8}};
+    for (size_t index = 0; index < 8; printf("pt2[%zd] = %d\n", index, (*pt2)[index++]))
+        ;
+
+    int (*pt3)[2][2] = (int[2][2][2]){{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}};
+    for (size_t index = 0; index < 8; printf("pt3[%zd] = %d\n", index, (**pt3)[index++]))
+        ;
 
     return 0;
 }
