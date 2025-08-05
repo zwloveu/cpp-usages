@@ -35,7 +35,7 @@ int main(void)
            days_sum(days));
 
     int num = 10;
-    float pi = 3.14;
+    float pi = 3.14F;
     char ch = 'A';
 
     print_data(&num, 'i');
