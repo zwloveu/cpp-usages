@@ -59,6 +59,37 @@ int main(void)
         printf("\nmultiple1[%td] = %d  *(p+%td) = %d  &multiple1[%td] = %p  p+%td = %p",
                i, multiple1[i], i, *(p1 + i), i, (void *)&multiple1[i], i, (void *)(p1 + i));
 
+    char board[3][3] = {
+        {'1', '2', '3'},
+        {'4', '5', '6'},
+        {'7', '8', '9'}};
+    /* List all elements of the array */
+    for (int i = 0; i < 9; i++)
+        // here board, the name of the array, which type is `T (*)[N]`
+        // will be implicitly converted to a pointer to which the first line it points.
+        // then *board is the first line itself, which type is `T[N]`
+        // in c, the array(here is the first line) will be
+        // implicitly converted to a pointer to which the first element it points.
+        // so finally *board is the address of the first element in the first line,
+        // which type is T*,
+        // then we can use *board +i to move the next element.
+        printf(" board: %c\n", *(*board + i));
+
+    unsigned short board1[2][3][3] = {
+        {{1, 2, 3},
+         {4, 5, 6},
+         {7, 8, 9}},
+        {{10, 20, 30},
+         {40, 50, 60},
+         {70, 80, 90}}};
+    /* List all elements of the array */
+    for (int i = 0; i < 18; i++)
+        // board1, type is short[M][[N][O]
+        // *board1 -> board1[0] which type is short (*)[N][O], and it is an array too
+        // *board -> short(*)[N][O] -> short (*)[O]
+        // **board -> short *, points to board1[0][0][0]
+        printf(" board1[%d]: %hd\n", i, *(**board1 + i));
+
     return 0;
 }
 
