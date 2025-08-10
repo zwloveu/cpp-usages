@@ -17,7 +17,10 @@ MyClass &MyClass::operator=(const MyClass &rhs)
 {
     std::cout << "User-provided copy assignment operator invoked." << std::endl;
 
-    this->x = rhs.x;
+    if (this != &rhs)
+    {
+        x = rhs.x;
+    }
 
     return *this;
 }
