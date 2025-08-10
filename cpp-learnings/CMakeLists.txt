@@ -45,8 +45,15 @@ else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
+file(GLOB CPP_LEARNINGS_SOURCES_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/sources/*.cpp")
+message(STATUS "Collected sources for cpp_learnings: ${CPP_LEARNINGS_SOURCES_SOURCES}")
 add_executable(cpp_learnings
     src/main.cpp
+    ${CPP_LEARNINGS_SOURCES_SOURCES}
+)
+target_include_directories(cpp_learnings
+    PRIVATE 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/includes
 )
 
 add_executable(c_learnings
