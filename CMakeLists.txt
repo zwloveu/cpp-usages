@@ -25,14 +25,4 @@ else()  # Add for Linux/macOS and MinGW
     )
 endif()
 
-# Configure C++ standard
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-# Configure C standard
-set(CMAKE_C_STANDARD 17) 
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS OFF)
-
-add_subdirectory(cpp-learnings)
+add_subdirectory(src/cpp11)

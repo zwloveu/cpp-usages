@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+#include <limits>
+
+#include "operation_registry.h"
+#include "thirdparty/mypath2/mymath2.h"
+
+void clear_screen()
+{
+    system("cls"); // for Linux/Mac，use system("clear")
+}
+
+int main()
+{
+    std::cout << "1 + 2 = " << add2(1, 2) << std::endl;
+    register_all_operations();
+    const auto &ops = OperationRegistry::get_instance().get_operations();
+
+    std::vector<std::string> op_keys;
+    for (const auto &[key, _] : ops)
+    {
+        op_keys.push_back(key);
+    }
+
+    while (true)
+    {
+        clear_screen();
+
+        for (size_t i = 0; i < op_keys.size(); ++i)
+        {
+            std::cout << "  " << (i + 1) << ". " << op_keys[i] << std::endl;
+        }
+
+        std::cout << std::endl
+                  << "Please choose (0 to exit, 1-" << op_keys.size() << "): ";
+
+        int choice;
+        std::cin >> choice;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << std::endl
+                      << "Invalid input! Please choose (0 to exit, 1-" << op_keys.size() << "): " << std::endl;
+            system("pause");
+            continue;
+        }
+
+        if (choice == 0)
+        {
+            clear_screen();
+            std::cout << "Exiting program...\n";
+            break;
+        }
+
+        if (choice < 1 || choice > static_cast<int>(op_keys.size()))
+        {
+            std::cout << std::endl
+                      << "Invalid input! Please choose (0 to exit, 1-" << op_keys.size() << "): " << std::endl;
+            std::cout << "Press any key to continue...";
+            std::cin.get();
+            continue;
+        }
+
+        clear_screen();
+        std::cout << "----- [RUNNING] " << op_keys[choice - 1] << " -----" << std::endl;
+
+        try
+        {
+            ops.at(op_keys[choice - 1])();
+        }
+        catch (const std::exception &e)
+        {
+            std::cout << "Exception: " << e.what() << std::endl;
+        }
+
+        std::cout << "----- [Finished] " << op_keys[choice - 1] << " -----" << std::endl;
+        std::cout << "Press any key to continue...";
+        std::cin.ignore();
+        std::cin.get();
+    }
+
+    return 0;
+}
