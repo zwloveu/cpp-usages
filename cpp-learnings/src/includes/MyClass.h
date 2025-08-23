@@ -1,3 +1,5 @@
+#pragma once
+
 class MyClass
 {
 private:
@@ -6,8 +8,8 @@ private:
 public:
     MyClass() = delete;
     MyClass(int x);
-    MyClass(const MyClass& rhs);
-    MyClass& operator=(const MyClass& rhs);
+    MyClass(const MyClass &rhs);
+    MyClass &operator=(const MyClass &rhs);
 
     void print_x() const;
 };

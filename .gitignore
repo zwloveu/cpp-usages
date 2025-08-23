@@ -5,6 +5,7 @@ cmake-build-*/
 CMakeFiles/
 CMakeCache.txt
 Makefile
+.vs/
 
 # Compiled files
 *.obj

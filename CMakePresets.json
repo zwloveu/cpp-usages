@@ -6,13 +6,15 @@
             "displayName": "Windows x64",
             "generator": "Visual Studio 17 2022",
             "architecture": "x64",
-            "binaryDir": "${sourceDir}/build/win64"
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}"
         },
         {
             "name": "linux",
             "displayName": "Linux",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/linux",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "gcc",
                 "CMAKE_CXX_COMPILER": "g++",
@@ -23,7 +25,8 @@
             "name": "mingw64",
             "displayName": "MINGW64",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/mingw64",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "gcc",
                 "CMAKE_CXX_COMPILER": "g++",
