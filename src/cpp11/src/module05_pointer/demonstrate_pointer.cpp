@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 #include "module05_pointer/demonstrate_pointer.h"
 
@@ -107,7 +108,7 @@ void demonstrate_pointer_p_to_first()
     const unsigned short (*const pointer_to_first_element_of_2d_array)[4] = array_2d;
     const int (*const pointer_to_first_element_of_3d_array)[2][2] = array_3d;
 
-    for (size_t index = 0; index < 2; index++)
+    for (size_t index = 0; index < 8; index++)
     {
         std::cout << "pointer_to_first_element_of_flat_array[" << index << "] = " << pointer_to_first_element_of_flat_array[index] << std::endl;
     }
@@ -121,4 +122,33 @@ void demonstrate_pointer_p_to_first()
     {
         std::cout << "pointer_to_first_element_of_3d_array[" << index << "] = " << (**pointer_to_first_element_of_3d_array)[index] << std::endl;
     }
+}
+
+void demonstrate_pointer_void()
+{
+    // void (*print_data)(const void *const data, const char type) = ......
+    auto print_data = [](const void *const data, const char type)
+    {
+        switch (type)
+        {
+        case 'i':
+            std::cout << "Integer: " << *(int *)data << std::endl;
+            break;
+        case 'f':
+            std::cout << "Float: " << std::fixed << std::setprecision(2) << *(float *)data << std::endl;
+            break;
+        case 'c':
+            std::cout << "Character: " << *(char *)data << std::endl;
+            break;
+        default:;
+        }
+    };
+
+    int num = 10;
+    float pi = 3.14F;
+    char ch = 'A';
+
+    print_data(&num, 'i');
+    print_data(&pi, 'f');
+    print_data(&ch, 'c');
 }

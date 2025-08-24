@@ -94,6 +94,10 @@ inline void register_all_operations()
         "module05_pointer.04_p2first",
         []()
         { demonstrate_pointer_p_to_first(); });
+        registry.register_operation(
+        "module05_pointer.05_voidpointer",
+        []()
+        { demonstrate_pointer_void(); });
 
     registry.register_operation(
         "module06_namespace.basic",
