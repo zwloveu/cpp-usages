@@ -47,19 +47,19 @@ inline void register_all_operations()
     auto &registry = OperationRegistry::get_instance();
 
     registry.register_operation(
-        "module01_range_for.basic",
+        "module01_range_for.01_basic",
         []()
         { demonstrate_range_for_basic(); });
     registry.register_operation(
-        "module01_range_for.modify",
+        "module01_range_for.02_modify",
         []()
         { demonstrate_range_for_modify(); });
     registry.register_operation(
-        "module01_range_for.modify.ptr",
+        "module01_range_for.03_modify.ptr",
         []()
         { demonstrate_range_for_modify_ptr(); });
     registry.register_operation(
-        "module01_range_for.modify.iter",
+        "module01_range_for.04_modify.iter",
         []()
         { demonstrate_range_for_modify_iter(); });
 
@@ -79,9 +79,21 @@ inline void register_all_operations()
         { demonstrate_constructor_basic(); });
 
     registry.register_operation(
-        "module05_pointer.basic",
+        "module05_pointer.01_basic",
         []()
         { demonstrate_pointer_basic(); });
+    registry.register_operation(
+        "module05_pointer.02_p2array",
+        []()
+        { demonstrate_pointer_p2array(); });
+    registry.register_operation(
+        "module05_pointer.03_p2p",
+        []()
+        { demonstrate_pointer_p2p(); });
+    registry.register_operation(
+        "module05_pointer.04_p2first",
+        []()
+        { demonstrate_pointer_p_to_first(); });
 
     registry.register_operation(
         "module06_namespace.basic",
