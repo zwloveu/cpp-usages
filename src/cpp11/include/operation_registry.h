@@ -11,6 +11,7 @@
 #include "module04_constructor/demonstrate_constructor.h"
 #include "module05_pointer/demonstrate_pointer.h"
 #include "module06_namespace/demonstrate_namespace.h"
+#include "module07_extern_c/demonstrate_extern_c.h"
 
 class OperationRegistry
 {
@@ -86,4 +87,9 @@ inline void register_all_operations()
         "module06_namespace.basic",
         []()
         { module06_namespace::demonstrate_namespace_basic(); });
+
+    registry.register_operation(
+        "module07_extern_c.basic",
+        []()
+        { demonstrate_extern_c_basic(); });
 }

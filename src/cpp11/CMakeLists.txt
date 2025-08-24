@@ -11,6 +11,8 @@ add_executable(${PROJECT_NAME}
     src/module05_pointer/demonstrate_pointer.cpp
     src/module06_namespace/demonstrate_namespace.cpp
     src/module06_namespace/country.cpp
+    src/module07_extern_c/demonstrate_extern_c.cpp
+    src/module07_extern_c/c_function.c
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES CMAKE_CXX_STANDARD 11)

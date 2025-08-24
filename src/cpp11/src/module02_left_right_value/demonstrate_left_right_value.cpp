@@ -22,21 +22,17 @@ void wrapper(T &&arg)
 void demonstrate_left_right_value_basic()
 {
     int a = 5;
-    int c = 0;
 
-    try
-    {
-        if (c == 0)
-        {
-            throw std::invalid_argument("be divided can not be zero");
-        }
-        int b = a / c;
-        std::cout << b << std::endl;
-    }
-    catch (const std::exception &e)
-    {
-        throw std::invalid_argument(e.what());
-    }
+    target(a);
+
+    target(5);
 
     wrapper(std::move(a));
+
+    target(a);
+
+    std::string s1{"hello"};
+    std::string s2 = std::move(s1);
+    std::cout << "s1 = " << s1 << ", address of s1 is: " << &s1 << std::endl;
+    std::cout << "s2 = " << s2 << ", address of s2 is: " << &s2 << std::endl;
 }

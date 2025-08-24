@@ -66,7 +66,7 @@ void demonstrate_pointer_basic()
     table1 = nullptr;
 
     constexpr int rows1 = 3, cols1 = 4;
-    int (*table2)[cols1] = new int[rows1][cols1];
+    int (*const table2)[cols1] = new int[rows1][cols1];
     for (int i = 0; i < rows; ++i)
     {
         for (int j = 0; j < cols; ++j)
