@@ -32,7 +32,7 @@ public:
         return instance;
     }
 
-    void register_operation(const std::string &key, std::function<void()> func) noexcept
+    void register_operation(const std::string &key, std::function<void()> &&func) noexcept
     {
         _ops[key] = std::move(func);
     }

@@ -3,6 +3,9 @@ project(cpp_11 LANGUAGES C CXX)
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
+)
+
+target_sources(${PROJECT_NAME} PRIVATE
     src/module01_range_for/demonstrate_range_for.cpp
     src/module02_left_right_value/demonstrate_left_right_value.cpp
     src/module03_raii/demonstrate_raii.cpp

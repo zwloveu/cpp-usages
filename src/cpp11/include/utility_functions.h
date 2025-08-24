@@ -1,37 +1,64 @@
 #pragma once
 
-#include <string>
-#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <limits>
+#include <utility>
+#include <iterator>
 
-namespace CppPrimer::Utils
+namespace utility_functions
 {
-    inline std::string trim(const std::string &s)
+    template <typename Iter>
+    struct EnumerateIterator
     {
-        auto start = s.begin();
-        while (start != s.end() && std::isspace(*start))
+        using value_type = std::pair<size_t, typename std::iterator_traits<Iter>::reference>;
+        using reference = value_type;
+        using pointer = void;
+        using difference_type = typename std::iterator_traits<Iter>::difference_type;
+        using iterator_category = typename std::iterator_traits<Iter>::iterator_category;
+
+        Iter iter;
+        size_t index;
+
+        EnumerateIterator(Iter iter, size_t index) : iter(iter), index(index) {}
+
+        reference operator*() const { return {index, *iter}; }
+
+        EnumerateIterator &operator++()
         {
-            start++;
+            ++iter;
+            ++index;
+            return *this;
         }
 
-        auto end = s.end();
-        do
+        bool operator!=(const EnumerateIterator &other) const
         {
-            end--;
-        } while (std::distance(start, end) > 0 && std::isspace(*end));
+            return iter != other.iter;
+        }
+    };
 
-        return std::string(start, end + 1);
-    }
-
-    template <typename T>
-        requires std::integral<T>
-    inline bool is_even(T num)
+    template <typename Iter>
+    struct EnumerateRange
     {
-        return num % 2 == 0;
-    }
+        Iter begin_iter;
+        Iter end_iter;
 
-    template <typename T>
-    inline typename std::enable_if<std::is_integral<T>::value, bool>::type is_even_cpp11(T num)
+        EnumerateRange(Iter begin, Iter end) : begin_iter{begin}, end_iter{end} {}
+
+        EnumerateIterator<Iter> begin() const
+        {
+            return {begin_iter, 0};
+        }
+
+        EnumerateIterator<Iter> end() const
+        {
+            return {end_iter, 0};
+        }
+    };
+
+    template <typename Iter>
+    EnumerateRange<Iter> enumerate(Iter begin, Iter end)
     {
-        return num % 2 == 0;
+        return EnumerateRange<Iter>(begin, end);
     }
 }

@@ -3,6 +3,7 @@
 #include <limits>
 
 #include "operation_registry.h"
+#include "utility_functions.h"
 
 void clear_screen()
 {
@@ -12,11 +13,11 @@ void clear_screen()
 int main()
 {
     std::cout << "C++ version: " << __cplusplus << std::endl;
-    
+
     register_all_operations();
     const auto &ops = OperationRegistry::get_instance().get_operations();
 
-    std::vector<std::string> op_keys;
+    std::vector<std::string> op_keys{};
     for (const auto &pair : ops)
     {
         op_keys.push_back(pair.first);
@@ -24,9 +25,16 @@ int main()
 
     while (true)
     {
-        for (size_t i = 0; i < op_keys.size(); ++i)
+        // for (size_t i = 0; i < op_keys.size(); ++i)
+        // {
+        //     std::cout << "  " << (i + 1) << ". " << op_keys[i] << std::endl;
+        // }
+
+        for (const auto &pair : utility_functions::enumerate(op_keys.cbegin(), op_keys.cend()))
         {
-            std::cout << "  " << (i + 1) << ". " << op_keys[i] << std::endl;
+            size_t index = pair.first;
+            const auto &key = pair.second;
+            std::cout << "  " << (index + 1) << ". " << key << std::endl;
         }
 
         std::cout << std::endl
@@ -74,7 +82,7 @@ int main()
         }
 
         std::cout << "----- [Finished] " << op_keys[choice - 1] << " -----" << std::endl;
-        std::cout << "Press any key to continue...";        
+        std::cout << "Press any key to continue...";
         std::cin.ignore();
         std::cin.get();
         clear_screen();
