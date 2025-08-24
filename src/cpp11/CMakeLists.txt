@@ -12,13 +12,18 @@ add_executable(${PROJECT_NAME}
     src/module06_namespace/demonstrate_namespace.cpp
     src/module06_namespace/country.cpp
     src/module07_extern_c/demonstrate_extern_c.cpp
-    src/module07_extern_c/c_function.c
+    src/module07_extern_c/c_functions.c
+    src/module08_third_party/demonstrate_third_party.cpp
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES CMAKE_CXX_STANDARD 11)
-set_target_properties(${PROJECT_NAME} PROPERTIES CMAKE_CXX_STANDARD_REQUIRED ON)
-set_target_properties(${PROJECT_NAME} PROPERTIES CMAKE_C_STANDARD 17)
-set_target_properties(${PROJECT_NAME} PROPERTIES CMAKE_C_STANDARD_REQUIRED ON)
+set_target_properties(${PROJECT_NAME} PROPERTIES 
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+    C_STANDARD 17
+    C_STANDARD_REQUIRED ON
+    C_EXTENSIONS OFF
+)
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE 

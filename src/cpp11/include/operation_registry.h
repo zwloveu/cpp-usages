@@ -12,6 +12,7 @@
 #include "module05_pointer/demonstrate_pointer.h"
 #include "module06_namespace/demonstrate_namespace.h"
 #include "module07_extern_c/demonstrate_extern_c.h"
+#include "module08_third_party/demonstrate_third_party.h"
 
 class OperationRegistry
 {
@@ -94,10 +95,14 @@ inline void register_all_operations()
         "module05_pointer.04_p2first",
         []()
         { demonstrate_pointer_p_to_first(); });
-        registry.register_operation(
+    registry.register_operation(
         "module05_pointer.05_voidpointer",
         []()
         { demonstrate_pointer_void(); });
+    registry.register_operation(
+        "module05_pointer.06_function_pointer",
+        []()
+        { demonstrate_pointer_function(); });
 
     registry.register_operation(
         "module06_namespace.basic",
@@ -108,4 +113,9 @@ inline void register_all_operations()
         "module07_extern_c.basic",
         []()
         { demonstrate_extern_c_basic(); });
+
+    registry.register_operation(
+        "module08_third_party.basic",
+        []()
+        { demonstrate_third_party_basic(); });
 }

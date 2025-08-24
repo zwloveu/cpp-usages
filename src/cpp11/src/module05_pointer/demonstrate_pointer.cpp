@@ -152,3 +152,28 @@ void demonstrate_pointer_void()
     print_data(&pi, 'f');
     print_data(&ch, 'c');
 }
+
+void demonstrate_pointer_function()
+{
+    auto func_add = [](int a, int b)
+    { return a + b; };
+    auto func_sub = [](int a, int b)
+    { return a - b; };
+    auto func_mul = [](int a, int b)
+    { return a * b; };
+    auto func_div = [](int a, int b)
+    {
+        return b == 0
+                   ? 0
+                   : a / b;
+    };
+
+    int (*ops[])(int, int){func_add, func_sub, func_mul, func_div};
+    const char *op_names[]{"+", "-", "*", "/"};
+
+    int a = 10, b = 5;
+    for (int i = 0; i < 4; ++i)
+    {
+        std::cout << a << " " << op_names[i] << " " << b << " = " << ops[i](a, b) << std::endl;
+    }
+}
