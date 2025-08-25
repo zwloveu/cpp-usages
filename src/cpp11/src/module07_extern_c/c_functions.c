@@ -1,6 +1,6 @@
 #include "module07_extern_c/c_functions.h"
 
-void print_c_version()
+void print_c_version(void)
 {
     printf("C standard version: %ld\n", __STDC_VERSION__);
 }

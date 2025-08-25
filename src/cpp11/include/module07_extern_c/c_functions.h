@@ -11,7 +11,7 @@ extern "C"
 #include <stddef.h>
 #include <stdlib.h>
 
-    void print_c_version();
+    void print_c_version(void);
 
     bool is_letter(char letter);
     char to_lower(char letter);

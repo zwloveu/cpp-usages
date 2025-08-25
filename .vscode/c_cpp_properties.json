@@ -25,7 +25,7 @@
             "cppStandard": "c++23"
         },
          {
-            "name": "MINGW64",
+            "name": "GCC-MINGW64",
             "includePath": [
                 "${workspaceFolder}/**",
                 "d:/msys64/mingw64/include/**",
@@ -33,6 +33,19 @@
             ],
             "compilerPath": "d:/msys64/mingw64/bin/g++.exe",
             "intelliSenseMode": "windows-gcc-x64",
+            "cStandard": "c17",
+            "cppStandard": "c++23"
+        },
+        {
+            "name": "CLANG-MINGW64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "d:/msys64/mingw64/include/**",
+                "D:/LLVM/include",
+                "D:/LLVM/lib/clang/*/include"
+            ],
+            "compilerPath": "D:/LLVM/bin/clang++.exe",
+            "intelliSenseMode": "windows-clang-x64",
             "cStandard": "c17",
             "cppStandard": "c++23"
         }
