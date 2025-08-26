@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.31)
 
 project(cpp_workspace)
 
@@ -28,3 +28,4 @@ endif()
 add_subdirectory(src/c17)
 add_subdirectory(src/cpp11)
 add_subdirectory(src/cpp20)
+add_subdirectory(src/cpp23)
