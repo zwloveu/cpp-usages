@@ -4,6 +4,20 @@
 
 #include "data_structures/dictionary/dictionary.h"
 
+struct DicNode
+{
+    char *key;
+    void *value;
+    DicNode *next;
+};
+
+struct Dictionary
+{
+    DicNode **table;
+    size_t size;
+    size_t count;
+};
+
 unsigned int hash(const char *const key, size_t size)
 {
     unsigned int hash = 0;
@@ -25,19 +39,19 @@ Dictionary *dict_create(size_t size)
 
     dict->size = size;
     dict->count = 0;
-    dict->table = (struct DicNode **)malloc(sizeof(struct DicNode *) * size);
+    dict->table = (DicNode **)calloc(size, sizeof(DicNode *));
 
     return dict;
 }
 
-void dict_insert(struct Dictionary *dict, const char *const key, void *const value)
+void dict_insert(Dictionary *dict, const char *const key, void *const value)
 {
     if (!dict || !key || !value)
         return;
 
     unsigned int index = hash(key, dict->size);
 
-    struct DicNode *current = dict->table[index];
+    DicNode *current = dict->table[index];
     while (current)
     {
         if (strcmp(current->key, key) == 0)
@@ -48,28 +62,30 @@ void dict_insert(struct Dictionary *dict, const char *const key, void *const val
         current = current->next;
     }
 
-    struct DicNode *new_node = (struct DicNode *)malloc(sizeof(DicNode *));
+    DicNode *new_node = (DicNode *)malloc(sizeof(DicNode));
     if (!new_node)
         return;
 
     new_node->key = (char *)malloc(strlen(key) + 1);
-    if (new_node->key != NULL)
-    {
-        strcpy(new_node->key, key);
-    }
+    strncpy(new_node->key, key, strlen(key) + 1);
+    new_node->key[strlen(key)] = '\0';
+    // if (new_node->key != NULL)
+    // {
+    //     strcpy(new_node->key, key);
+    // }
     new_node->value = value;
     new_node->next = dict->table[index];
     dict->table[index] = new_node;
     dict->count++;
 }
 
-void *dict_find(struct Dictionary *dict, const char *const key)
+void *dict_find(Dictionary *dict, const char *const key)
 {
     if (!dict || !key)
         return NULL;
 
     unsigned int index = hash(key, dict->size);
-    struct DicNode *current = dict->table[index];
+    DicNode *current = dict->table[index];
 
     while (current)
     {
@@ -83,14 +99,14 @@ void *dict_find(struct Dictionary *dict, const char *const key)
     return NULL;
 }
 
-void dict_delete(struct Dictionary *dict, const char *const key)
+void dict_delete(Dictionary *dict, const char *const key)
 {
     if (!dict || !key)
         return;
 
     unsigned int index = hash(key, dict->size);
-    struct DicNode *current = dict->table[index];
-    struct DicNode *prev = NULL;
+    DicNode *current = dict->table[index];
+    DicNode *prev = NULL;
 
     while (current)
     {
@@ -116,17 +132,17 @@ void dict_delete(struct Dictionary *dict, const char *const key)
     }
 }
 
-void dict_destroy(struct Dictionary *dict)
+void dict_destroy(Dictionary *dict)
 {
     if (!dict)
         return;
 
-    for (int i = 0; i < dict->size; i++)
+    for (size_t i = 0; i < dict->size; i++)
     {
-        struct DicNode *current = dict->table[i];
+        DicNode *current = dict->table[i];
         while (current)
         {
-            struct DicNode *temp = current;
+            DicNode *temp = current;
             current = current->next;
             free(temp->key);
             free(temp);
@@ -137,14 +153,14 @@ void dict_destroy(struct Dictionary *dict)
     free(dict);
 }
 
-void dict_iterate(struct Dictionary *dict, void (*func)(const char *const key, const void *const value))
+void dict_iterate(Dictionary *dict, void (*func)(const char *const key, const void *const value))
 {
     if (!dict || !func)
         return;
 
-    for (int i = 0; i < dict->size; i++)
+    for (size_t i = 0; i < dict->size; i++)
     {
-        struct DicNode *current = dict->table[i];
+        DicNode *current = dict->table[i];
         while (current)
         {
             func(current->key, current->value);

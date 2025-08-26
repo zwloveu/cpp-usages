@@ -4,27 +4,30 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef void (*OperationFunc)(void);
+#include "data_structures/dictionary/dictionary.h"
 
-typedef struct OperationNode
-{
-    char *key;
-    OperationFunc func;
-    struct OperationNode *next;
-} OperationNode;
+typedef void (*OperationFunc)(void);
 
 static struct
 {
-    OperationNode *head;
+    Dictionary *dict;
 } s_registry = {NULL};
+
+static void init_registry(void)
+{
+    if (!s_registry.dict)
+    {
+        s_registry.dict = dict_create(20);
+    }
+}
 
 static void register_operation(const char *const key, OperationFunc func)
 {
-    OperationNode *node = (OperationNode *)malloc(sizeof(OperationNode));
-    node->key = strdup(key);
-    node->func = func;
-    node->next = s_registry.head;
-    s_registry.head = node;
+    init_registry();
+    if (!s_registry.dict)
+        return;
+
+    dict_insert(s_registry.dict, key, (void *)func);
 }
 
 #endif // OPERATION_REGISTRY_H
