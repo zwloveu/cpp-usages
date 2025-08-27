@@ -33,7 +33,7 @@
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
-                {
+        {
             "name": "clang-mingw64",
             "displayName": "Clang MINGW64",
             "generator": "Ninja",

@@ -25,6 +25,8 @@ else()  # Add for Linux/macOS and MinGW
     )
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_subdirectory(src/c17)
 add_subdirectory(src/cpp11)
 add_subdirectory(src/cpp20)

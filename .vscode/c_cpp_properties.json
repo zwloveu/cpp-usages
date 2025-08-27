@@ -10,7 +10,8 @@
             "compilerPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe",
             "intelliSenseMode": "windows-msvc-x64",
             "cStandard": "c17",
-            "cppStandard": "c++23"
+            "cppStandard": "c++23",
+            "compileCommands": "${workspaceFolder}/out/build/win64/compile_commands.json"
         },
         {
             "name": "Linux",
@@ -34,7 +35,8 @@
             "compilerPath": "d:/msys64/mingw64/bin/g++.exe",
             "intelliSenseMode": "windows-gcc-x64",
             "cStandard": "c17",
-            "cppStandard": "c++23"
+            "cppStandard": "c++23",
+            "compileCommands": "${workspaceFolder}/out/build/gcc-mingw64/compile_commands.json"
         },
         {
             "name": "CLANG-MINGW64",

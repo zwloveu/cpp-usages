@@ -8,6 +8,9 @@ add_executable(${PROJECT_NAME}
 target_sources(${PROJECT_NAME} PRIVATE
     FILE_SET CXX_MODULES FILES
     modules/math/math.cppm
+)
+
+target_sources(${PROJECT_NAME} PRIVATE
     modules/math/add.cppm
     modules/math/sub.cppm
 )

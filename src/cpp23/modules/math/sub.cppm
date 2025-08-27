@@ -1,6 +1,6 @@
 module math;
 
-namespace
+namespace math
 {
     int sub(int a, int b)
     {
