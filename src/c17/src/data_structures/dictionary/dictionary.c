@@ -1,170 +1,191 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "data_structures/dictionary/dictionary.h"
 
-struct DicNode
-{
-    char *key;
-    void *value;
-    DicNode *next;
-};
-
-struct Dictionary
-{
-    DicNode **table;
-    size_t size;
-    size_t count;
-};
-
-unsigned int hash(const char *const key, size_t size)
-{
-    unsigned int hash = 0;
-    for (size_t i = 0; i < size; i++)
-    {
-        hash = hash * 31 + key[i];
+static bool keys_are_equal(const DictKey* key1, const DictKey* key2) {
+    if (!key1 || !key2 || key1->type != key2->type) {
+        return false;
     }
-    return hash % size;
+
+    switch (key1->type) {
+        case KEY_TYPE_INT:
+            return *(int*)key1->data == *(int*)key2->data;
+        case KEY_TYPE_STRING:
+            return strcmp((const char*)key1->data, (const char*)key2->data) == 0;
+        case KEY_TYPE_POINTER:
+            return key1->data == key2->data;
+        case KEY_TYPE_FLOAT:
+            return *(float*)key1->data == *(float*)key2->data;
+        case KEY_TYPE_CHAR:
+            return *(char*)key1->data == *(char*)key2->data;
+        default:
+            return false;
+    }
 }
 
-Dictionary *dict_create(size_t size)
-{
-    if (size == '\0')
-        return NULL;
+static void free_key(DictKey* key) {
+    if (!key) return;
 
-    Dictionary *dict = (Dictionary *)malloc(sizeof(Dictionary));
-    if (!dict)
-        return NULL;
+    switch (key->type) {
+        case KEY_TYPE_INT:
+        case KEY_TYPE_FLOAT:
+        case KEY_TYPE_CHAR:
+            free(key->data);
+            break;
+        case KEY_TYPE_STRING:
+            free((void*)key->data);
+            break;
+        case KEY_TYPE_POINTER:
+            // handled by outer caller
+            break;
+        default:
+            break;
+    }
+    free(key);
+}
 
-    dict->size = size;
+static void free_value(DictValue* value) {
+    if (!value) return;
+
+    switch (value->type) {
+        case VALUE_TYPE_INT:
+        case VALUE_TYPE_FLOAT:
+        case VALUE_TYPE_CHAR:
+            free(value->data);
+            break;
+        case VALUE_TYPE_STRING:
+            free((void*)value->data); 
+            break;
+        case VALUE_TYPE_POINTER:
+        case VALUE_TYPE_FUNCTION:
+            // handled by outer caller
+            break;
+        default:
+            break;
+    }
+    free(value);
+}
+
+static void free_entry(DictEntry* entry) {
+    if (!entry) return;
+    
+    free_key(entry->key);
+    free_value(entry->value);
+    free(entry);
+}
+
+Dictionary* dict_init(const size_t initial_capacity) {
+    int capacity =  initial_capacity;
+    if (capacity == 0) {
+        capacity = DEFAULT_DICT_CAPACITY;
+    }
+
+    Dictionary* dict = (Dictionary*)malloc(sizeof(Dictionary));
+    if (!dict) {
+        fprintf(stderr, "failed to malloc for Dictionary in dict_init\n");
+        return NULL;
+    }
+
+    dict->entries = (DictEntry**)calloc(initial_capacity, sizeof(DictEntry*));
+    if (!dict->entries) {
+        fprintf(stderr, "failed to calloc entries in dict_init\n");
+        free(dict);
+        return NULL;
+    }
+
+    dict->capacity = initial_capacity;
     dict->count = 0;
-    dict->table = (DicNode **)calloc(size, sizeof(DicNode *));
 
     return dict;
 }
 
-void dict_insert(Dictionary *dict, const char *const key, void *const value)
-{
-    if (!dict || !key || !value)
-        return;
-
-    unsigned int index = hash(key, dict->size);
-
-    DicNode *current = dict->table[index];
-    while (current)
-    {
-        if (strcmp(current->key, key) == 0)
-        {
-            current->value = value;
-            return;
-        }
-        current = current->next;
+bool dict_resize(Dictionary* dict, const size_t new_capacity) {
+    if (!dict || new_capacity <= dict->capacity) {
+        return false;
     }
 
-    DicNode *new_node = (DicNode *)malloc(sizeof(DicNode));
-    if (!new_node)
-        return;
+    DictEntry** new_entries = (DictEntry**)realloc(
+        dict->entries, new_capacity * sizeof(DictEntry*)
+    );
+    if (!new_entries) {
+        fprintf(stderr, "failed to resize dict\n");
+        return false;
+    }
 
-    new_node->key = (char *)malloc(strlen(key) + 1);
-    strncpy(new_node->key, key, strlen(key) + 1);
-    new_node->key[strlen(key)] = '\0';
-    // if (new_node->key != NULL)
-    // {
-    //     strcpy(new_node->key, key);
-    // }
-    new_node->value = value;
-    new_node->next = dict->table[index];
-    dict->table[index] = new_node;
-    dict->count++;
+    if (new_capacity > dict->capacity) {
+        memset(&new_entries[dict->capacity], 0, 
+               (new_capacity - dict->capacity) * sizeof(DictEntry*));
+    }
+
+    dict->entries = new_entries;
+    dict->capacity = new_capacity;
+
+    return true;
 }
 
-void *dict_find(Dictionary *dict, const char *const key)
-{
-    if (!dict || !key)
+void dict_destroy(Dictionary* dict) {
+    if (!dict) return;
+
+    for (size_t i = 0; i < dict->capacity; i++) {
+        DictEntry* current = dict->entries[i];
+        while (current) {
+            DictEntry* next = current->next;
+            free_entry(current);
+            current = next;
+        }
+    }
+
+    free(dict->entries);
+    free(dict); 
+}
+
+size_t dict_get_count(const Dictionary* dict) {
+    return dict ? dict->count : 0;
+}
+
+DictEntry* dict_get_entry(const Dictionary* dict, const size_t index) {
+    if (!dict || index >= dict->capacity) {
         return NULL;
+    }
+    return dict->entries[index];
+}
 
-    unsigned int index = hash(key, dict->size);
-    DicNode *current = dict->table[index];
+DictEntry* dict_find_entry(const Dictionary* dict, const DictKey* key) {
+    if (!dict || !key) return NULL;
 
-    while (current)
-    {
-        if (strcmp(current->key, key) == 0)
-        {
-            return current->value;
+    size_t hash = key->type;
+    switch (key->type) {
+        case KEY_TYPE_INT:
+            hash ^= *(int*)key->data;
+            break;
+        case KEY_TYPE_STRING:
+            hash ^= strlen((const char*)key->data);
+            break;
+        case KEY_TYPE_POINTER:
+            hash ^= (size_t)key->data;
+            break;
+        case KEY_TYPE_FLOAT:
+            hash ^= *(unsigned int*)key->data;
+            break;
+        case KEY_TYPE_CHAR:
+            hash ^= *(char*)key->data;
+            break;
+        default:
+            break;
+    }
+    
+    size_t index = hash % dict->capacity;
+    
+    DictEntry* current = dict->entries[index];
+    while (current) {
+        if (keys_are_equal(current->key, key)) {
+            return current;
         }
         current = current->next;
     }
-
+    
     return NULL;
-}
-
-void dict_delete(Dictionary *dict, const char *const key)
-{
-    if (!dict || !key)
-        return;
-
-    unsigned int index = hash(key, dict->size);
-    DicNode *current = dict->table[index];
-    DicNode *prev = NULL;
-
-    while (current)
-    {
-        if (strcmp(current->key, key) == 0)
-        {
-            if (prev)
-            {
-                prev->next = current->next;
-            }
-            else
-            {
-                dict->table[index] = current->next;
-            }
-
-            free(current->key);
-            free(current);
-            dict->count--;
-            return;
-        }
-
-        prev = current;
-        current = current->next;
-    }
-}
-
-void dict_destroy(Dictionary *dict)
-{
-    if (!dict)
-        return;
-
-    for (size_t i = 0; i < dict->size; i++)
-    {
-        DicNode *current = dict->table[i];
-        while (current)
-        {
-            DicNode *temp = current;
-            current = current->next;
-            free(temp->key);
-            free(temp);
-        }
-    }
-
-    free(dict->table);
-    free(dict);
-}
-
-void dict_iterate(Dictionary *dict, void (*func)(const char *const key, const void *const value))
-{
-    if (!dict || !func)
-        return;
-
-    for (size_t i = 0; i < dict->size; i++)
-    {
-        DicNode *current = dict->table[i];
-        while (current)
-        {
-            func(current->key, current->value);
-            current = current->next;
-        }
-    }
 }

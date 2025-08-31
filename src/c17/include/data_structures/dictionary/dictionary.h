@@ -1,18 +1,18 @@
 #ifndef DATA_STRUCTURES_DICTIONARY_DICTIONARY_H
 #define DATA_STRUCTURES_DICTIONARY_DICTIONARY_H
 
-struct DicNode;
-struct Dictionary;
-typedef struct DicNode DicNode;
-typedef struct Dictionary Dictionary;
+#include <stddef.h>
+#include <stdbool.h>
 
-unsigned int hash(const char *const key, size_t size);
+#include "data_structures/dictionary/dict_types.h"
 
-Dictionary *dict_create(size_t size);
-void dict_insert(Dictionary *dict, const char *const key, void *const value);
-void *dict_find(Dictionary *dict, const char *const key);
-void dict_delete(Dictionary *dict, const char *const key);
-void dict_destroy(Dictionary *dict);
-void dict_iterate(Dictionary *dict, void (*func)(const char *const key, const void *const value));
+#define DEFAULT_DICT_CAPACITY 20
+
+Dictionary* dict_init(const size_t initial_capacity);
+void dict_destroy(Dictionary* dict);
+size_t dict_get_count(const Dictionary* dict);
+DictEntry* dict_get_entry(const Dictionary* dict, const size_t index);
+DictEntry* dict_find_entry(const Dictionary* dict, const DictKey* key);
+bool dict_resize(Dictionary* dict, const size_t new_capacity);
 
 #endif // DATA_STRUCTURES_DICTIONARY_DICTIONARY_H
