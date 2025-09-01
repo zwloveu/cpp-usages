@@ -4,6 +4,8 @@
 #include <stdbool.h>
 
 #include "data_structures/dictionary/dict_insert.h"
+#include "data_structures/dictionary/dict_utils.h"
+#include "utils/char_utils.h"
 
 static DictKey *create_key(KeyType type, const void *const data)
 {
@@ -25,7 +27,7 @@ static DictKey *create_key(KeyType type, const void *const data)
             *(int *)key->data = *(const int *)data;
         break;
     case KEY_TYPE_STRING:
-        key->data = strdup((const char *)data);
+        key->data = chars_safe_cpy((const char *)data);
         break;
     case KEY_TYPE_POINTER:
         key->data = (void *)data;
@@ -74,7 +76,7 @@ static DictValue *create_value(ValueType type, const void *const data)
             *(int *)value->data = *(const int *)data;
         break;
     case VALUE_TYPE_STRING:
-        value->data = strdup((const char *)data);
+        value->data = chars_safe_cpy((const char *)data);
         break;
     case VALUE_TYPE_POINTER:
     case VALUE_TYPE_FUNCTION:
@@ -233,7 +235,7 @@ bool dict_insert_float_key_str_value(Dictionary *dict, float key, const char *co
 bool dict_insert_str_key_func_value(Dictionary *dict, const char *const key, void (*const func)())
 {
     DictKey *dict_key = create_key(KEY_TYPE_STRING, key);
-    DictValue *dict_value = create_value(VALUE_TYPE_FUNCTION, func);
+    DictValue *dict_value = create_value(VALUE_TYPE_FUNCTION, (void *)(uintptr_t)func);
     return dict_insert_generic(dict, dict_key, dict_value);
 }
 

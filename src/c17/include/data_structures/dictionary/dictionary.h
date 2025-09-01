@@ -2,7 +2,6 @@
 #define DATA_STRUCTURES_DICTIONARY_DICTIONARY_H
 
 #include <stddef.h>
-#include <stdbool.h>
 
 #include "data_structures/dictionary/dict_types.h"
 
@@ -13,6 +12,5 @@ void dict_destroy(Dictionary* dict);
 size_t dict_get_count(const Dictionary* dict);
 DictEntry* dict_get_entry(const Dictionary* dict, const size_t index);
 DictEntry* dict_find_entry(const Dictionary* dict, const DictKey* key);
-bool dict_resize(Dictionary* dict, const size_t new_capacity);
 
 #endif // DATA_STRUCTURES_DICTIONARY_DICTIONARY_H
