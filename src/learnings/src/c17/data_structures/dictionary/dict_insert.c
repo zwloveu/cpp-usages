@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "c17/data_structures/dictionary/dict_insert.h"
 #include "c17/data_structures/dictionary/dict_utils.h"
