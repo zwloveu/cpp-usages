@@ -26,4 +26,5 @@ sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100
 sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 100
 sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 100
 sudo update-alternatives --install /usr/bin/lld lld /usr/bin/lld-20 100
+sudo update-alternatives --install /usr/bin/lldb-dap lldb-dap /usr/bin/lldb-dap-20 100
 ```
