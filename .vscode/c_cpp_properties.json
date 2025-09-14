@@ -12,11 +12,11 @@
             "cStandard": "c17",
             "cppStandard": "c++23",
             "compileCommands": [
-                "${workspaceFolder}/out/build/win64/compile_commands.json"
+                "${workspaceFolder}/out/build/win64/debug/compile_commands.json"
             ]
         },
         {
-            "name": "Linux",
+            "name": "Linux-GCC",
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include"
@@ -24,7 +24,10 @@
             "compilerPath": "/usr/bin/g++",
             "intelliSenseMode": "linux-gcc-x64",
             "cStandard": "c17",
-            "cppStandard": "c++23"
+            "cppStandard": "c++23",
+            "compileCommands": [
+                "${workspaceFolder}/out/build/linux/debug/compile_commands.json"
+            ]
         },
         {
             "name": "GCC-MINGW64",
@@ -38,21 +41,23 @@
             "cStandard": "c17",
             "cppStandard": "c++23",
             "compileCommands": [
-                "${workspaceFolder}/out/build/gcc-mingw64/compile_commands.json"
+                "${workspaceFolder}/out/build/gcc-mingw64/debug/compile_commands.json"
             ]
         },
         {
-            "name": "CLANG-MINGW64",
+            "name": "Linux-Clang",
             "includePath": [
                 "${workspaceFolder}/**",
-                "d:/msys64/mingw64/include/**",
-                "D:/LLVM/include",
-                "D:/LLVM/lib/clang/*/include"
+                "/usr/include",
+                "/usr/lib/llvm-*/include"
             ],
-            "compilerPath": "D:/LLVM/bin/clang++.exe",
-            "intelliSenseMode": "windows-clang-x64",
+            "compilerPath": "/usr/bin/clang++",
+            "intelliSenseMode": "linux-clang-x64",
             "cStandard": "c17",
-            "cppStandard": "c++23"
+            "cppStandard": "c++23",
+            "compileCommands": [
+                "${workspaceFolder}/out/build/linux-clang/debug/compile_commands.json"
+            ]
         }
     ],
     "version": 4
