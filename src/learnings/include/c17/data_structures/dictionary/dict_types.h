@@ -1,6 +1,8 @@
 #ifndef DATA_STRUCTURES_DICTIONARY_DICT_TYPES_H
 #define DATA_STRUCTURES_DICTIONARY_DICT_TYPES_H
 
+#include <stddef.h>
+
 typedef enum KeyType
 {
     KEY_TYPE_INT,
