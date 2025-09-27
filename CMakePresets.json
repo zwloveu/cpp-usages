@@ -44,6 +44,18 @@
                 "CMAKE_CXX_COMPILER": "clang++",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "win-clang",
+            "displayName": "Windows CLANG",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}/debug",
+            "installDir": "${sourceDir}/out/install/${presetName}/debug",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
         }
     ]
 }

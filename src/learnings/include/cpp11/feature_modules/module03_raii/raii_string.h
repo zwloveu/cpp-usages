@@ -24,7 +24,7 @@ public:
 
         _size = std::strlen(str);
         _data = new char[_size + 1];
-        std::strcpy(_data, str);
+        std::memcpy(_data, str, _size + 1);
     }
     RAIIString(RAIIString &&other) noexcept
         : _data{other._data}, _size{other._size}
